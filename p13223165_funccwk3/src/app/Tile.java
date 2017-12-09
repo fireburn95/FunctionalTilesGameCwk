@@ -21,6 +21,10 @@ public class Tile extends Picture{
 		return number;
 	}
 
+	public static List<Picture> tileToPicList(List<Tile> listoftiles) {
+		return listoftiles.map(tile -> new Picture(tile.toString()));
+	}
+
 	
 
 }

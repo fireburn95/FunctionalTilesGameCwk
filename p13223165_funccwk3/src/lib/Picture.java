@@ -345,7 +345,7 @@ public class Picture {
 	 */
 	public static Picture spread(List<Picture> pictures, int position, Character fill) {
 		return pictures.foldr((p,q) -> p.beside(q, position, fill), emptyPicture());
-	}
+	}	
 
 	/**
 	 * Spread a list of pictures (join them side by side) using space for padding
