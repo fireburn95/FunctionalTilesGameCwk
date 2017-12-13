@@ -60,7 +60,7 @@ public class Game {
 		final int zeroPosition = findZero(board);
 		
 		//Check if move is valid
-		if(zeroPosition > ((3 * 3) - 3)) {
+		if(zeroPosition >= ((3 * 3) - 3)) {
 			return board;
 		}
 		
@@ -173,7 +173,7 @@ public class Game {
 		//Then perform the method to check if it is solvable and keep the list if true
 		//Then gets the first element
 		List<Integer> randomSolvableNumbers = 
-				Stream.iterate(0, n->n+1)
+				Stream.iterate(0, n -> n + 1)
 				.map(n -> randomZeroToEight())
 				.filter(n -> isSolvable(n)==true)
 				.limit(1)
@@ -205,7 +205,7 @@ public class Game {
 	
 	private static boolean isSolvable(List<Integer> numbersAsIs) {
 		//Create an array to store the count of the inversions for each index
-		//Can use variable too but useful for debugging
+		//Can use int variable too but useful for debugging
 		final int[] countInversions = {0,0,0,0,0,0,0,0};
 		
 		//Remove 0 as it will always be 0, hence not included
