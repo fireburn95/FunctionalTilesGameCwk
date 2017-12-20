@@ -1,4 +1,4 @@
-package lib;
+package puzzle;
 
 /**
  * Author: drs

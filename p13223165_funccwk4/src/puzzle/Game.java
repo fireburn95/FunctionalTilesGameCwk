@@ -1,6 +1,7 @@
-package app;
+package puzzle;
 
-import static lib.List.streamToList;
+import static puzzle.List.streamToList;
+import static puzzle.Picture.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,10 +13,6 @@ import java.util.function.IntPredicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import lib.List;
-import lib.Picture;
-import static lib.Picture.*;
 
 /**
  * This class contains all the static methods to play the 3x3 Tile game (8-tile game).
@@ -80,17 +77,18 @@ public class Game {
 		//Then 'join' side-by-side each List of Picture into a single Picture
 		//Frame at certain points to make a decent-looking display
 		List<Picture> rows = board
-		.map(tile -> tile.fixWidth(14, CTR, ' '))
-		.map(tile -> tile.rightFrame())
-		.group(3)
-		.map(group -> group.map(tile -> tile.topFrame()))
-		.map(list -> Picture.spread(list, CTR));
+			.map(tile -> tile.fixWidth(14, CTR, ' '))
+			.map(tile -> tile.rightFrame())
+			.group(3)
+			.map(group -> group.map(tile -> tile.topFrame()))
+			.map(list -> Picture.spread(list, CTR));
 		
 		//Take each 'row' in the List of Pictures, and stack them on top of each other
 		//And add final frames
-		Picture grid = Picture.stack(rows.group(rows.length()).at(0), Picture.CTR)
-		.bottomFrame()
-		.leftFrame();
+		Picture grid = Picture
+				.stack(rows.group(rows.length()).at(0), Picture.CTR)
+				.bottomFrame()
+				.leftFrame();
 		
 		//Return the final picture
 		return grid;
@@ -117,7 +115,8 @@ public class Game {
 		}
 		
 		//Swap the two elements
-		final List<Tile> boardSwapped = swapElements(zeroPosition, zeroPosition+3, board);
+		final List<Tile> boardSwapped = 
+				swapElements(zeroPosition, zeroPosition+3, board);
 		
 		//Return board
 		return boardSwapped;
@@ -144,7 +143,8 @@ public class Game {
 		}
 		
 		//Swap the two elements
-		final List<Tile> boardSwapped = swapElements(zeroPosition, zeroPosition-3, board);
+		final List<Tile> boardSwapped = 
+				swapElements(zeroPosition, zeroPosition-3, board);
 		
 		//Return board
 		return boardSwapped;
@@ -171,7 +171,8 @@ public class Game {
 		}
 		
 		//Swap the two elements
-		final List<Tile> boardSwapped = swapElements(zeroPosition, zeroPosition+1, board);
+		final List<Tile> boardSwapped = 
+				swapElements(zeroPosition, zeroPosition+1, board);
 		
 		//Return board
 		return boardSwapped;
@@ -198,7 +199,8 @@ public class Game {
 		}
 		
 		//Swap the two elements
-		final List<Tile> boardSwapped = swapElements(zeroPosition, zeroPosition-1, board);
+		final List<Tile> boardSwapped = 
+				swapElements(zeroPosition, zeroPosition-1, board);
 		
 		//Return board
 		return boardSwapped;
@@ -254,13 +256,15 @@ public class Game {
 		//The 'key' is the first line of each group, which is the name/description
 		//The value is the Picture object it creates
 		try (Stream<String> lines = Files.lines(Paths.get("dat/pictures.txt"))) {
+			
 			streamToList(lines)
-			.group(8)
-			.listToStream()
-			.forEach(group -> 
+				.group(8)
+				.listToStream()
+				.forEach(group -> 
 					picmap.put(group.head(), 
 					new Picture(group.tail().map(Picture::stringToListOfCharacters)))
-			);
+				);
+			
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
@@ -290,11 +294,11 @@ public class Game {
 		//Then gets the first element
 		List<Integer> randomSolvableNumbers = 
 				Stream.iterate(0, increment)
-				.map(n -> randomZeroToEight())
-				.filter(n -> isSolvable(n)==true)
-				.limit(1)
-				.findFirst()
-				.get();
+					.map(numb -> randomZeroToEight())
+					.filter(list -> isSolvable(list)==true)
+					.limit(1)
+					.findFirst()
+					.get();
 		
 		
 		//Take the list of random numbers 0..8
@@ -321,8 +325,9 @@ public class Game {
 	 * @return A List of random, non-repeat numbers between 0 and 8.
 	 */
 	private static List<Integer> randomZeroToEight() {
-		//Produce a stream of distinct Integers 0..8
-		Stream<Integer> random0to8 = new Random().ints(0,9).distinct()
+		//Produce a stream of distinct Integers 0..8 inclusive
+		Stream<Integer> random0to8 = 
+				new Random().ints(0,9).distinct()
 				.limit(9)
 				.mapToObj(n -> n);
 		
@@ -360,8 +365,7 @@ public class Game {
 			
 			numbsWithoutZero.toArrayList().subList(index+1, 8).stream()
 			.forEach(value ->{
-				if(numbsWithoutZero.toArrayList().get(index) > value) 
-				{countInversions[index]++;}
+				if(numbsWithoutZero.toArrayList().get(index) > value) countInversions[index]++;
 			});
 			
 		});

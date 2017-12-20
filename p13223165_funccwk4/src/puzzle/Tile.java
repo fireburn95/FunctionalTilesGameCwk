@@ -1,6 +1,5 @@
-package app;
+package puzzle;
 
-import lib.Picture;
 /**
  * This class extends Picture and is used to represent a Tile in the grid board of the
  * game. Each tile has an associated ID, which is immutable after initialisation. 

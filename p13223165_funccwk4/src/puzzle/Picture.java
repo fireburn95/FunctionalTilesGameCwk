@@ -1,7 +1,7 @@
-package lib;
+package puzzle;
 
 import static java.util.stream.Collectors.*;
-import static lib.List.*;
+import static puzzle.List.*;
 
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
