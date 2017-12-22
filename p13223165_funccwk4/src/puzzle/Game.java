@@ -370,7 +370,7 @@ public class Game {
 			
 		});
 		
-		//Add all inversion counts together
+		//Add all inversion counts together using a reduce
 		int resultOfInversions = 
 				Arrays.stream(countInversions).reduce((a,b) -> a + b).getAsInt();
 		
